@@ -1,320 +1,433 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VAPEVEX™ | The 0% Nicotine Aversion Vape to Help You Quit</title>
-    <!-- Tailwind CSS CDN -->
+    <title>VAPEVEX™ | Aversion Therapy For Your Lungs</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Google Fonts: Creepster, Permanent Marker, Inter, Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Outfit:wght@400;600;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        slime: '#a3e635',
-                        neonpink: '#ff007f',
-                        hazardyellow: '#facc15',
-                        toxicgreen: '#22c55e',
-                        darkvoid: '#0a0a0c',
-                        cardbg: '#12131a'
+                        neonGreen: '#39FF14',
+                        electricPink: '#FF007F',
+                        brightCyan: '#00F0FF',
+                        vividYellow: '#FFE600',
+                        darkBg: '#0f0f13',
+                        cardBg: '#181820'
                     },
                     fontFamily: {
+                        drippy: ['Permanent Marker', 'cursive'],
                         horror: ['Creepster', 'cursive'],
-                        cyber: ['Orbitron', 'sans-serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                        sans: ['Outfit', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'drip': 'drip 2s infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-10px) rotate(2deg)' },
+                        },
+                        drip: {
+                            '0%': { transform: 'scaleY(1)' },
+                            '100%': { transform: 'scaleY(1.15)' },
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            background-color: #0a0a0c;
-            color: #f3f4f6;
-            overflow-x: hidden;
+        .neon-text-green {
+            text-shadow: 0 0 8px #39FF14, 0 0 20px #39FF14, 0 0 40px rgba(57,255,20,0.8);
         }
-        .glow-slime {
-            box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);
+        .neon-text-pink {
+            text-shadow: 0 0 8px #FF007F, 0 0 20px #FF007F, 0 0 40px rgba(255,0,127,0.8);
         }
-        .glow-pink {
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        .slime-drip-bg {
+            background-image: radial-gradient(circle at 50% 0%, rgba(57,255,20,0.15) 0%, transparent 70%);
         }
-        .bg-slime-gradient {
-            background: linear-gradient(135deg, #a3e635 0%, #22c55e 100%);
-        }
-        .text-gradient-slime {
-            background: linear-gradient(135deg, #a3e635, #facc15);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .text-gradient-pink {
-            background: linear-gradient(135deg, #ff007f, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .slime-border {
-            border: 2px solid #a3e635;
-        }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a0a0c;
+            background: #0f0f13;
         }
         ::-webkit-scrollbar-thumb {
-            background: #a3e635;
-            border-radius: 4px;
+            background: #39FF14;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF007F;
         }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="bg-darkBg text-white font-sans overflow-x-hidden selection:bg-electricPink selection:text-white">
 
-    <!-- TOP ANNOUNCEMENT BAR -->
-    <div class="bg-hazardyellow text-black font-extrabold text-xs md:text-sm py-2 text-center uppercase tracking-widest flex items-center justify-center space-x-2">
-        <i class="fa-solid => fa-triangle-exclamation animate-bounce"></i>
-        <span>WARNING: 100% REVOLTING FLAVOURS. 0.0% NICOTINE. SCIENTIFICALLY DESIGNED TO QUIT VAPING FOREVER.</span>
-        <i class="fa-solid fa-triangle-exclamation animate-bounce"></i>
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-electricPink via-vividYellow to-neonGreen text-black font-extrabold text-xs md:text-sm py-2 text-center tracking-wider uppercase flex items-center justify-center gap-2 px-4 shadow-lg z-50 relative">
+        <i data-lucide="skull" class="w-4 h-4 animate-bounce"></i>
+        <span>WARNING: 0.1% Nicotine • 100% Repulsive Flavours • Guaranteed To Make You Hate Vaping</span>
+        <i data-lucide="skull" class="w-4 h-4 animate-bounce"></i>
     </div>
 
-    <!-- MAIN NAVIGATION -->
-    <nav class="sticky top-0 z-50 bg-darkvoid/90 backdrop-blur-md border-b border-slime/20 px-4 md:px-8 py-4 flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-            <span class="font-horror text-3xl md:text-4xl text-slime tracking-wider transform -rotate-2">VAPEVEX</span>
-            <span class="bg-neonpink text-white font-extrabold text-[10px] px-2 py-0.5 rounded tracking-widest uppercase">0.0% Nicotine</span>
-        </div>
-        <div class="hidden md:flex items-center space-x-8 font-cyber text-sm tracking-wider">
-            <a href="#flavours" class="hover:text-slime transition">FLAVOURS</a>
-            <a href="#science" class="hover:text-slime transition">HOW IT WORKS</a>
-            <a href="#simulator" class="hover:text-slime transition">AVERSION SIMULATOR</a>
-            <a href="#reviews" class="hover:text-slime transition">COMMUNITY REVIEWS</a>
-        </div>
-        <div class="flex items-center space-x-4">
-            <button onclick="scrollToFlavours()" class="bg-slime text-black font-extrabold font-cyber text-xs md:text-sm px-5 py-2.5 rounded-full hover:bg-hazardyellow transition glow-slime uppercase">
-                GET VEXED NOW
-            </button>
+    <!-- Navigation Header -->
+    <nav class="sticky top-0 z-40 bg-darkBg/90 backdrop-blur-md border-b-2 border-neonGreen/30 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-horror text-3xl md:text-4xl text-neonGreen tracking-wider neon-text-green transform group-hover:scale-105 transition">VAPEVEX™</span>
+                <span class="bg-electricPink text-black font-drippy text-xs px-2 py-0.5 rounded font-black tracking-widest uppercase rotate-6">QUIT NOW</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 font-extrabold tracking-wide text-sm">
+                <a href="#flavors" class="hover:text-neonGreen transition flex items-center gap-1"><i data-lucide="flame" class="w-4 h-4 text-electricPink"></i> Horrible Flavours</a>
+                <a href="#science" class="hover:text-neonGreen transition flex items-center gap-1"><i data-lucide="brain" class="w-4 h-4 text-brightCyan"></i> The Science</a>
+                <a href="#reviews" class="hover:text-neonGreen transition flex items-center gap-1"><i data-lucide="message-square" class="w-4 h-4 text-vividYellow"></i> Victims' Regrets</a>
+                <a href="#tester" class="hover:text-neonGreen transition flex items-center gap-1"><i data-lucide="sparkles" class="w-4 h-4 text-neonGreen"></i> Regret Wheel</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="openCartModal()" class="relative bg-electricPink hover:bg-pink-600 text-white font-drippy px-4 py-2 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 active:shadow-none transition flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline">QUIT KIT</span>
+                    <span id="cart-count" class="bg-vividYellow text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <header class="relative min-h-[85vh] flex items-center justify-center px-4 py-16 overflow-hidden">
-        <!-- Background Toxic Glow -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-slime/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-neonpink/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            <div>
-                <div class="inline-flex items-center space-x-2 bg-slime/10 border border-slime/30 rounded-full px-4 py-1.5 mb-6">
-                    <span class="w-2 h-2 rounded-full bg-slime animate-ping"></span>
-                    <span class="text-slime font-cyber text-xs tracking-widest uppercase">THE WORLD'S FIRST AVERSION VAPE</span>
+    <!-- Hero Section -->
+    <section class="relative min-h-[88vh] flex items-center justify-center pt-8 pb-16 px-4 overflow-hidden slime-drip-bg">
+        <div class="absolute top-10 left-5 w-32 h-32 bg-neonGreen/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-5 w-48 h-48 bg-electricPink/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                <div class="inline-flex items-center gap-2 bg-cardBg border border-neonGreen/50 px-4 py-1.5 rounded-full text-neonGreen text-xs md:text-sm font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(57,255,20,0.2)]">
+                    <span class="w-2 h-2 rounded-full bg-neonGreen animate-ping"></span>
+                    Psychological Aversion Therapy Vapes
                 </div>
-                <h1 class="font-cyber font-black text-4xl sm:text-6xl lg:text-7xl leading-tight mb-6">
-                    QUIT VAPING <br>
-                    <span class="text-gradient-slime">THROUGH PURE</span> <br>
-                    <span class="text-gradient-pink">DISGUST.</span>
+
+                <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none">
+                    RUIN YOUR <span class="font-horror text-neonGreen neon-text-green block sm:inline my-1 sm:my-0">VAPE ADDICTION</span> FOREVER.
                 </h1>
-                <p class="text-gray-300 text-base sm:text-lg mb-8 max-w-xl font-sans">
-                    Can't break the hand-to-mouth habit? VAPEVEX delivers 0.0% nicotine paired with repulsive flavours like <strong class="text-slime">Bin Juice</strong>[cite: 3], <strong class="text-pink-400">Milk Chunks</strong>[cite: 4], and <strong class="text-yellow-400">Lard</strong>[cite: 5]. Rewire your brain's craving loop in record time.
+
+                <p class="text-gray-300 text-lg md:text-xl font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    VAPEVEX™ combines <strong class="text-vividYellow">0.1% micro-nicotine</strong> with intentionally <strong class="text-electricPink uppercase">repulsive, sickening scents & flavours</strong>. Train your brain to despise every hit.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <button onclick="scrollToFlavours()" class="bg-slime text-black font-extrabold font-cyber px-8 py-4 rounded-xl hover:bg-hazardyellow transition glow-slime text-center text-sm tracking-wider uppercase">
-                        EXPLORE DISGUSTING FLAVOURS
-                    </button>
-                    <a href="#simulator" class="border border-white/20 hover:border-slime font-cyber px-8 py-4 rounded-xl transition text-center text-sm tracking-wider uppercase">
-                        TRY AVERSION SIMULATOR
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#flavors" class="w-full sm:w-auto bg-neonGreen hover:bg-lime-400 text-black font-drippy text-lg px-8 py-4 rounded-2xl border-4 border-black shadow-[6px_6px_0px_#000] hover:shadow-[2px_2px_0px_#000] hover:translate-x-1 hover:translate-y-1 transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="skull" class="w-6 h-6"></i> BROWSE TERRIBLE FLAVOURS
                     </a>
+                    <a href="#science" class="w-full sm:w-auto bg-cardBg hover:bg-gray-800 text-brightCyan font-bold text-base px-6 py-4 rounded-2xl border-2 border-brightCyan/40 hover:border-brightCyan transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i> HOW AVERSION WORKS
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8 border-t border-gray-800/80">
+                    <div class="bg-cardBg/60 p-4 rounded-xl border border-gray-800">
+                        <div id="puffs-counter" class="text-2xl sm:text-3xl font-black text-neonGreen font-drippy">1,482,920</div>
+                        <div class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1">Regretted Puffs</div>
+                    </div>
+                    <div class="bg-cardBg/60 p-4 rounded-xl border border-gray-800">
+                        <div id="vapers-counter" class="text-2xl sm:text-3xl font-black text-electricPink font-drippy">48,219</div>
+                        <div class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1">Vapers Repulsed</div>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1 bg-cardBg/60 p-4 rounded-xl border border-gray-800">
+                        <div class="text-2xl sm:text-3xl font-black text-vividYellow font-drippy">98.4%</div>
+                        <div class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1">Quit Within 3 Days</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Feature Showcase Card -->
-            <div class="relative flex justify-center">
-                <div class="w-full max-w-md bg-cardbg/80 border border-slime/30 rounded-3xl p-6 backdrop-blur-lg glow-slime relative overflow-hidden">
-                    <div class="absolute -top-6 -right-6 bg-neonpink text-white font-cyber text-xs px-8 py-3 transform rotate-12 font-black shadow-lg">
-                        0.0% NICOTINE
-                    </div>
-                    <div class="text-center py-6">
-                        <span class="font-horror text-5xl text-slime tracking-widest">VAPEVEX</span>
-                        <p class="text-gray-400 font-cyber text-xs mt-2 uppercase tracking-widest">Aversion Therapy Engine</p>
-                    </div>
+            <!-- Right Visual Product Trio Showcase -->
+            <div class="lg:col-span-5 relative flex justify-center">
+                <div class="relative w-full max-w-md animate-float">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-neonGreen via-brightCyan to-electricPink rounded-3xl opacity-30 blur-2xl -z-10"></div>
+                    
+                    <div class="bg-cardBg/90 border-4 border-neonGreen p-6 rounded-3xl shadow-2xl relative overflow-hidden text-center backdrop-blur-md">
+                        <span class="absolute -top-1 -right-1 bg-electricPink text-white font-drippy text-xs px-4 py-1.5 rounded-bl-xl border-b-2 border-l-2 border-black shadow-md z-20 uppercase tracking-widest">
+                            #1 BESTSELLER: REGRET
+                        </span>
 
-                    <div class="grid grid-cols-2 gap-3 my-4">
-                        <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-center">
-                            <i class="fa-solid fa-ban text-neonpink text-xl mb-1"></i>
-                            <div class="font-cyber text-xs text-gray-300">NICOTINE</div>
-                            <div class="font-bold text-slime text-sm">0.0% PURE</div>
-                        </div>
-                        <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-center">
-                            <i class="fa-solid fa-cloud text-slime text-xl mb-1"></i>
-                            <div class="font-cyber text-xs text-gray-300">PUFF COUNT</div>
-                            <div class="font-bold text-slime text-sm">1500 PUFFS</div>
-                        </div>
-                        <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-center">
-                            <i class="fa-solid fa-brain text-hazardyellow text-xl mb-1"></i>
-                            <div class="font-cyber text-xs text-gray-300">THERAPY</div>
-                            <div class="font-bold text-hazardyellow text-sm">AVERSION</div>
-                        </div>
-                        <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-center">
-                            <i class="fa-solid fa-skull text-purple-400 text-xl mb-1"></i>
-                            <div class="font-cyber text-xs text-gray-300">FLAVOUR</div>
-                            <div class="font-bold text-purple-400 text-sm">VEXED REAL</div>
-                        </div>
-                    </div>
+                        <img src="ad26a9f5-c7db-450c-9e1e-0d14e47913da.png" alt="VAPEVEX Nursing Home Flavour" class="w-full h-80 object-cover rounded-2xl border-2 border-black shadow-inner mb-4 hover:scale-105 transition duration-300">
 
-                    <div class="bg-hazardyellow/10 border border-hazardyellow/30 p-4 rounded-xl text-center">
-                        <p class="text-hazardyellow text-xs font-semibold">
-                            <i class="fa-solid fa-lightbulb mr-1"></i> "One hit of Horse Ball Hair and my brain literally deleted the urge to vape."[cite: 2]
-                        </p>
+                        <div class="text-left space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-horror text-2xl text-vividYellow tracking-wide">NURSING HOME FLAVOUR</h3>
+                                <span class="bg-black text-neonGreen font-mono text-xs px-2.5 py-1 rounded border border-neonGreen font-bold">0.1% NIC</span>
+                            </div>
+                            <p class="text-xs text-gray-300 italic font-medium">"All the classic scents... 1500 puffs of pure regret."[cite: 1]</p>
+                            
+                            <div class="flex flex-wrap gap-1.5 pt-2">
+                                <span class="bg-gray-800 text-pink-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-pink-500/30">🏥 Hospital Disinfectant</span>[cite: 1]
+                                <span class="bg-gray-800 text-yellow-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-yellow-500/30">🥦 Boiled Veggies</span>[cite: 1]
+                                <span class="bg-gray-800 text-green-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-green-500/30">🍞 Mouldy Bread</span>[cite: 1]
+                            </div>
+
+                            <button onclick="quickAddToCart('Nursing Home', '$19.99', 'ad26a9f5-c7db-450c-9e1e-0d14e47913da.png')" class="w-full mt-4 bg-electricPink hover:bg-pink-600 text-white font-drippy py-3 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 transition text-center flex items-center justify-center gap-2">
+                                <i data-lucide="plus-circle" class="w-5 h-5"></i> ADD TRIAL PACK - $19.99
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- FLAVOUR SHOWCASE SECTION -->
-    <section id="flavours" class="py-20 px-4 md:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="font-cyber text-3xl sm:text-5xl font-black mb-4 tracking-wider">
-                OUR REVOLTING <span class="text-gradient-slime">FLAVOUR LINEUP</span>
-            </h2>
-            <p class="text-gray-400 max-w-2xl mx-auto font-sans">
-                Formulated with 0.0% nicotine and 100% authentic foul aroma profiles to ruin your vaping habit forever.
-            </p>
+    <!-- How It Works Infographic -->
+    <section id="science" class="py-16 bg-black/60 border-y-2 border-neonGreen/30 relative">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="bg-brightCyan/20 text-brightCyan font-drippy text-sm px-4 py-1.5 rounded-full border border-brightCyan uppercase tracking-widest">Scientific Disgust Principles</span>
+                <h2 class="text-4xl md:text-5xl font-black text-white mt-4 tracking-tight">HOW <span class="text-neonGreen font-horror neon-text-green">AVERSION THERAPY</span> REWIRES YOUR BRAIN</h2>
+                <p class="text-gray-400 mt-2 font-medium">Sweet flavours like "Strawberry Watermelon Ice" tricked your brain into liking chemical inhalation. We break that mental loop in 3 terrible steps.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <div class="bg-cardBg p-6 rounded-2xl border-2 border-neonGreen/40 relative group hover:border-neonGreen transition">
+                    <div class="w-12 h-12 bg-neonGreen text-black font-drippy text-2xl rounded-2xl flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_#000] mb-4">1</div>
+                    <h3 class="text-xl font-extrabold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="zap" class="text-vividYellow"></i> Nicotine Craving Hits
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Your physical hand-to-mouth habit screams for a hit. You reach for VAPEVEX™ expecting a nicotine soothe.
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-800 text-xs font-mono text-neonGreen">
+                        Status: Physical Habit Activated
+                    </div>
+                </div>
+
+                <div class="bg-cardBg p-6 rounded-2xl border-2 border-electricPink/60 relative group hover:border-electricPink transition">
+                    <div class="w-12 h-12 bg-electricPink text-white font-drippy text-2xl rounded-2xl flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_#000] mb-4">2</div>
+                    <h3 class="text-xl font-extrabold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="frown" class="text-electricPink"></i> Horrible Flavour Shock
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Instead of sweet mango, your mouth fills with <i>Dumpster Bin Juice</i>, <i>Milk Chunks</i>, or <i>Lard</i>. Micro 0.1% nicotine prevents withdrawal rage while your palate suffers.
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-800 text-xs font-mono text-electricPink">
+                        Status: Gag Reflex & Disgust Triggered
+                    </div>
+                </div>
+
+                <div class="bg-cardBg p-6 rounded-2xl border-2 border-brightCyan/40 relative group hover:border-brightCyan transition">
+                    <div class="w-12 h-12 bg-brightCyan text-black font-drippy text-2xl rounded-2xl flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_#000] mb-4">3</div>
+                    <h3 class="text-xl font-extrabold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="smile" class="text-brightCyan"></i> Permanent Disgust Rewire
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Within 24-72 hours, your subconscious links the physical act of vaping to awful scents. You throw your vape away forever!
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-800 text-xs font-mono text-brightCyan">
+                        Status: Vape Free & Repulsed Forever
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Flavours Showcase Section (All 5 Flavours) -->
+    <section id="flavors" class="py-20 max-w-7xl mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="bg-electricPink text-black font-drippy text-sm px-4 py-1.5 rounded-full border-2 border-black uppercase tracking-widest rotate-2 inline-block">
+                100% Genuine Repulsive Aromas
+            </span>
+            <h2 class="text-4xl sm:text-5xl font-black text-white mt-4">PICK YOUR <span class="text-vividYellow font-horror">POISON OF CHOICE</span></h2>
+            <p class="text-gray-400 mt-2 font-medium">All VAPEVEX vapes come loaded with 1500 puffs, 0.1% micro-nicotine salt, and standard-setting grotesque taste notes.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- FLAVOUR 1: BIN JUICE -->
-            <div class="bg-cardbg border border-slime/20 rounded-2xl overflow-hidden hover:border-slime transition-all duration-300 group flex flex-col justify-between">
+
+            <!-- Flavor 1: Nursing Home -->
+            <div class="bg-cardBg border-4 border-neonGreen rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between transform hover:-translate-y-2 transition duration-300">
                 <div>
-                    <div class="h-48 bg-gradient-to-br from-green-950 to-black relative flex items-center justify-center p-4">
-                        <span class="absolute top-3 left-3 bg-slime text-black font-cyber text-xs font-extrabold px-2.5 py-1 rounded">0.0% NICOTINE</span>[cite: 3]
-                        <span class="absolute top-3 right-3 bg-black/60 text-gray-300 font-cyber text-xs px-2.5 py-1 rounded">1500 PUFFS</span>[cite: 3]
-                        <i class="fa-solid fa-trash-can text-7xl text-slime/40 group-hover:scale-110 transition duration-300"></i>
-                        <h3 class="absolute bottom-2 font-horror text-4xl text-slime drop-shadow-md">BIN JUICE</h3>[cite: 3]
+                    <div class="relative bg-gradient-to-b from-purple-900/40 to-cardBg p-4">
+                        <span class="absolute top-4 left-4 bg-vividYellow text-black font-drippy text-xs px-3 py-1 rounded-full border border-black shadow">
+                            0.1% NICOTINE
+                        </span>[cite: 1]
+                        <span class="absolute top-4 right-4 bg-black text-neonGreen font-mono text-xs px-2.5 py-1 rounded border border-neonGreen">
+                            1500 PUFFS
+                        </span>[cite: 1]
+                        <img src="ad26a9f5-c7db-450c-9e1e-0d14e47913da.png" alt="Nursing Home Flavour" class="w-full h-80 object-cover rounded-2xl border-2 border-black shadow-lg">
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-300 text-sm mb-4">
-                            Captures the essence of warm dumpster runoff, soggy cardboard, and forgotten mystery liquids[cite: 3].
-                        </p>
-                        <div class="bg-black/50 p-3 rounded-lg border border-white/5 mb-4 text-xs font-sans text-gray-400">
-                            <strong class="text-slime font-cyber block mb-1">SCENT NOTES:</strong>
-                            • Old Food • Wet Cardboard • Mystery Liquid • Sun-Baked Bin Slime[cite: 3]
+
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-horror text-3xl text-neonGreen neon-text-green">NURSING HOME</h3>[cite: 1]
+                        <p class="text-xs text-vividYellow font-bold tracking-wider uppercase">"All the classic scents... 1500 puffs of pure regret."[cite: 1]</p>
+
+                        <div class="space-y-2 pt-2 border-t border-gray-800">
+                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest">Scent & Taste Profile:</div>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen"></i> Old lady perfume & wet towels[cite: 1]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen"></i> Hospital Grade Disinfectant[cite: 1]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen"></i> Overcooked Boiled Vegetables[cite: 1]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen"></i> Mouldy Bread Crust finish[cite: 1]</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="px-6 pb-6">
-                    <button onclick="orderFlavor('Bin Juice')" class="w-full bg-slime/10 hover:bg-slime hover:text-black border border-slime text-slime font-cyber text-xs py-3 rounded-xl font-bold transition uppercase tracking-wider">
-                        ADD BIN JUICE TO CART[cite: 3]
+
+                <div class="p-6 pt-0">
+                    <button onclick="quickAddToCart('Nursing Home', '$19.99', 'ad26a9f5-c7db-450c-9e1e-0d14e47913da.png')" class="w-full bg-neonGreen hover:bg-lime-400 text-black font-drippy text-base py-3 rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 transition flex items-center justify-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> ORDER NURSING HOME - $19.99
                     </button>
                 </div>
             </div>
 
-            <!-- FLAVOUR 2: NURSING HOME -->
-            <div class="bg-cardbg border border-neonpink/20 rounded-2xl overflow-hidden hover:border-neonpink transition-all duration-300 group flex flex-col justify-between">
+            <!-- Flavor 2: Horse Ball Hair -->
+            <div class="bg-cardBg border-4 border-electricPink rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between transform hover:-translate-y-2 transition duration-300">
                 <div>
-                    <div class="h-48 bg-gradient-to-br from-fuchsia-950 to-black relative flex items-center justify-center p-4">
-                        <span class="absolute top-3 left-3 bg-neonpink text-white font-cyber text-xs font-extrabold px-2.5 py-1 rounded">0.0% NICOTINE</span>[cite: 1]
-                        <span class="absolute top-3 right-3 bg-black/60 text-gray-300 font-cyber text-xs px-2.5 py-1 rounded">1500 PUFFS</span>[cite: 1]
-                        <i class="fa-solid fa-hospital text-7xl text-neonpink/40 group-hover:scale-110 transition duration-300"></i>
-                        <h3 class="absolute bottom-2 font-horror text-4xl text-neonpink drop-shadow-md">NURSING HOME</h3>[cite: 1]
+                    <div class="relative bg-gradient-to-b from-pink-900/40 to-cardBg p-4">
+                        <span class="absolute top-4 left-4 bg-vividYellow text-black font-drippy text-xs px-3 py-1 rounded-full border border-black shadow">
+                            0.1% NICOTINE
+                        </span>[cite: 2]
+                        <span class="absolute top-4 right-4 bg-black text-electricPink font-mono text-xs px-2.5 py-1 rounded border border-electricPink">
+                            1500 PUFFS
+                        </span>[cite: 2]
+                        <img src="d720d5c8-0a08-4c0c-9f08-540d2d6a96ea.png" alt="Horse Ball Hair Flavour" class="w-full h-80 object-cover rounded-2xl border-2 border-black shadow-lg">
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-300 text-sm mb-4">
-                            A nostalgic blast of boiled cabbage, wet towels, heavy disinfectant, and vintage perfume[cite: 1].
-                        </p>
-                        <div class="bg-black/50 p-3 rounded-lg border border-white/5 mb-4 text-xs font-sans text-gray-400">
-                            <strong class="text-neonpink font-cyber block mb-1">SCENT NOTES:</strong>
-                            • Hospital Disinfectant • Boiled Vegetables • Wet Carpet • Mouldy Bread[cite: 1]
+
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-horror text-3xl text-electricPink neon-text-pink">HORSE BALL HAIR</h3>[cite: 2]
+                        <p class="text-xs text-vividYellow font-bold tracking-wider uppercase">"Smells like a day at the stables... (In a bad way)."[cite: 2]</p>
+
+                        <div class="space-y-2 pt-2 border-t border-gray-800">
+                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest">Scent & Taste Profile:</div>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricPink"></i> Coarse horse hair & stable dust[cite: 2]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricPink"></i> Dried barnyard sweat[cite: 2]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricPink"></i> Unexplained sweaty tennis ball[cite: 2]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricPink"></i> Pure equestrian trauma[cite: 2]</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="px-6 pb-6">
-                    <button onclick="orderFlavor('Nursing Home')" class="w-full bg-neonpink/10 hover:bg-neonpink hover:text-white border border-neonpink text-neonpink font-cyber text-xs py-3 rounded-xl font-bold transition uppercase tracking-wider">
-                        ADD NURSING HOME TO CART[cite: 1]
+
+                <div class="p-6 pt-0">
+                    <button onclick="quickAddToCart('Horse Ball Hair', '$19.99', 'd720d5c8-0a08-4c0c-9f08-540d2d6a96ea.png')" class="w-full bg-electricPink hover:bg-pink-600 text-white font-drippy text-base py-3 rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 transition flex items-center justify-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> ORDER HORSE BALL HAIR - $19.99
                     </button>
                 </div>
             </div>
 
-            <!-- FLAVOUR 3: HORSE BALL HAIR -->
-            <div class="bg-cardbg border border-hazardyellow/20 rounded-2xl overflow-hidden hover:border-hazardyellow transition-all duration-300 group flex flex-col justify-between">
+            <!-- Flavor 3: Bin Juice -->
+            <div class="bg-cardBg border-4 border-brightCyan rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between transform hover:-translate-y-2 transition duration-300">
                 <div>
-                    <div class="h-48 bg-gradient-to-br from-yellow-950 to-black relative flex items-center justify-center p-4">
-                        <span class="absolute top-3 left-3 bg-hazardyellow text-black font-cyber text-xs font-extrabold px-2.5 py-1 rounded">0.0% NICOTINE</span>[cite: 2]
-                        <span class="absolute top-3 right-3 bg-black/60 text-gray-300 font-cyber text-xs px-2.5 py-1 rounded">1500 PUFFS</span>[cite: 2]
-                        <i class="fa-solid fa-horse text-7xl text-hazardyellow/40 group-hover:scale-110 transition duration-300"></i>
-                        <h3 class="absolute bottom-2 font-horror text-3xl text-hazardyellow drop-shadow-md">HORSE BALL HAIR</h3>[cite: 2]
+                    <div class="relative bg-gradient-to-b from-cyan-900/40 to-cardBg p-4">
+                        <span class="absolute top-4 left-4 bg-vividYellow text-black font-drippy text-xs px-3 py-1 rounded-full border border-black shadow">
+                            0.1% NICOTINE
+                        </span>[cite: 3]
+                        <span class="absolute top-4 right-4 bg-black text-brightCyan font-mono text-xs px-2.5 py-1 rounded border border-brightCyan">
+                            1500 PUFFS
+                        </span>[cite: 3]
+                        <img src="7f9fca04-981b-472b-b087-5030f8d4d86f.png" alt="Bin Juice Flavour" class="w-full h-80 object-cover rounded-2xl border-2 border-black shadow-lg">
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-300 text-sm mb-4">
-                            Straight from the stables. Dusty straw, unwashed mane, sweat, and genuine barnyard funk[cite: 2].
-                        </p>
-                        <div class="bg-black/50 p-3 rounded-lg border border-white/5 mb-4 text-xs font-sans text-gray-400">
-                            <strong class="text-hazardyellow font-cyber block mb-1">SCENT NOTES:</strong>
-                            • Horse Hair • Dusty Stables • Barnyard Sweat • Tennis Ball Vibes[cite: 2]
+
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-horror text-3xl text-brightCyan">BIN JUICE</h3>[cite: 3]
+                        <p class="text-xs text-vividYellow font-bold tracking-wider uppercase">"It's not just a flavour... it's a lifestyle."[cite: 3]</p>
+
+                        <div class="space-y-2 pt-2 border-t border-gray-800">
+                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest">Scent & Taste Profile:</div>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-brightCyan"></i> Fermented restaurant leftover slurry[cite: 3]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-brightCyan"></i> Soggy wet cardboard[cite: 3]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-brightCyan"></i> Hot summer alleyway mystery puddle[cite: 3]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-brightCyan"></i> Guaranteed instant vape disposal[cite: 3]</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="px-6 pb-6">
-                    <button onclick="orderFlavor('Horse Ball Hair')" class="w-full bg-hazardyellow/10 hover:bg-hazardyellow hover:text-black border border-hazardyellow text-hazardyellow font-cyber text-xs py-3 rounded-xl font-bold transition uppercase tracking-wider">
-                        ADD HORSE BALL HAIR TO CART[cite: 2]
+
+                <div class="p-6 pt-0">
+                    <button onclick="quickAddToCart('Bin Juice', '$19.99', '7f9fca04-981b-472b-b087-5030f8d4d86f.png')" class="w-full bg-brightCyan hover:bg-cyan-400 text-black font-drippy text-base py-3 rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 transition flex items-center justify-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> ORDER BIN JUICE - $19.99
                     </button>
                 </div>
             </div>
 
-            <!-- FLAVOUR 4: MILK CHUNKS -->
-            <div class="bg-cardbg border border-cyan-400/20 rounded-2xl overflow-hidden hover:border-cyan-400 transition-all duration-300 group flex flex-col justify-between">
+            <!-- Flavor 4: Milk Chunks (New) -->
+            <div class="bg-cardBg border-4 border-blue-400 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between transform hover:-translate-y-2 transition duration-300">
                 <div>
-                    <div class="h-48 bg-gradient-to-br from-cyan-950 to-black relative flex items-center justify-center p-4">
-                        <span class="absolute top-3 left-3 bg-cyan-400 text-black font-cyber text-xs font-extrabold px-2.5 py-1 rounded">0.0% NICOTINE</span>[cite: 4]
-                        <span class="absolute top-3 right-3 bg-black/60 text-gray-300 font-cyber text-xs px-2.5 py-1 rounded">1500 PUFFS</span>[cite: 4]
-                        <i class="fa-solid fa-cow text-7xl text-cyan-400/40 group-hover:scale-110 transition duration-300"></i>
-                        <h3 class="absolute bottom-2 font-horror text-4xl text-cyan-300 drop-shadow-md">MILK CHUNKS</h3>[cite: 4]
+                    <div class="relative bg-gradient-to-b from-blue-950/40 to-cardBg p-4">
+                        <span class="absolute top-4 left-4 bg-vividYellow text-black font-drippy text-xs px-3 py-1 rounded-full border border-black shadow">
+                            0.1% NICOTINE
+                        </span>[cite: 4]
+                        <span class="absolute top-4 right-4 bg-black text-blue-400 font-mono text-xs px-2.5 py-1 rounded border border-blue-400">
+                            1500 PUFFS
+                        </span>[cite: 4]
+                        <img src="35e853c7-07cf-4e03-a0c9-41a664be10d6.png" alt="Milk Chunks Flavour" class="w-full h-80 object-cover rounded-2xl border-2 border-black shadow-lg">
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-300 text-sm mb-4">
-                            Suspended curds of expired school cafeteria milk with sour dairy undernotes[cite: 4].
-                        </p>
-                        <div class="bg-black/50 p-3 rounded-lg border border-white/5 mb-4 text-xs font-sans text-gray-400">
-                            <strong class="text-cyan-300 font-cyber block mb-1">SCENT NOTES:</strong>
-                            • Sour Dairy • Mystery Curds • School Cafeteria Milk • Warm Cheese[cite: 4]
+
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-horror text-3xl text-blue-300">MILK CHUNKS</h3>[cite: 4]
+                        <p class="text-xs text-vividYellow font-bold tracking-wider uppercase">"Real milk. Fake science. Great vibes."[cite: 4]</p>
+
+                        <div class="space-y-2 pt-2 border-t border-gray-800">
+                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest">Scent & Taste Profile:</div>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400"></i> Sour dairy undernotes[cite: 4]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400"></i> Suspended mystery curds[cite: 4]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400"></i> School cafeteria milk gone wrong[cite: 4]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400"></i> A little bit wrong in every puff[cite: 4]</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="px-6 pb-6">
-                    <button onclick="orderFlavor('Milk Chunks')" class="w-full bg-cyan-400/10 hover:bg-cyan-400 hover:text-black border border-cyan-400 text-cyan-300 font-cyber text-xs py-3 rounded-xl font-bold transition uppercase tracking-wider">
-                        ADD MILK CHUNKS TO CART[cite: 4]
+
+                <div class="p-6 pt-0">
+                    <button onclick="quickAddToCart('Milk Chunks', '$19.99', '35e853c7-07cf-4e03-a0c9-41a664be10d6.png')" class="w-full bg-blue-400 hover:bg-blue-300 text-black font-drippy text-base py-3 rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 transition flex items-center justify-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> ORDER MILK CHUNKS - $19.99
                     </button>
                 </div>
             </div>
 
-            <!-- FLAVOUR 5: LARD -->
-            <div class="bg-cardbg border border-amber-600/20 rounded-2xl overflow-hidden hover:border-amber-600 transition-all duration-300 group flex flex-col justify-between">
+            <!-- Flavor 5: Lard (New) -->
+            <div class="bg-cardBg border-4 border-amber-600 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between transform hover:-translate-y-2 transition duration-300">
                 <div>
-                    <div class="h-48 bg-gradient-to-br from-amber-950 to-black relative flex items-center justify-center p-4">
-                        <span class="absolute top-3 left-3 bg-amber-500 text-black font-cyber text-xs font-extrabold px-2.5 py-1 rounded">0.0% NICOTINE</span>[cite: 5]
-                        <span class="absolute top-3 right-3 bg-black/60 text-gray-300 font-cyber text-xs px-2.5 py-1 rounded">1500 PUFFS</span>[cite: 5]
-                        <i class="fa-solid fa-piggy-bank text-7xl text-amber-500/40 group-hover:scale-110 transition duration-300"></i>
-                        <h3 class="absolute bottom-2 font-horror text-4xl text-amber-500 drop-shadow-md">LARD</h3>[cite: 5]
+                    <div class="relative bg-gradient-to-b from-amber-950/40 to-cardBg p-4">
+                        <span class="absolute top-4 left-4 bg-vividYellow text-black font-drippy text-xs px-3 py-1 rounded-full border border-black shadow">
+                            0.1% NICOTINE
+                        </span>[cite: 5]
+                        <span class="absolute top-4 right-4 bg-black text-amber-500 font-mono text-xs px-2.5 py-1 rounded border border-amber-500">
+                            1500 PUFFS
+                        </span>[cite: 5]
+                        <img src="55862dda-a84b-4ea0-8c4b-a8ecfda52904.png" alt="Lard Flavour" class="w-full h-80 object-cover rounded-2xl border-2 border-black shadow-lg">
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-300 text-sm mb-4">
-                            Congealed pork fat aroma straight from the butcher's apron[cite: 5]. Thick and oily.
-                        </p>
-                        <div class="bg-black/50 p-3 rounded-lg border border-white/5 mb-4 text-xs font-sans text-gray-400">
-                            <strong class="text-amber-500 font-cyber block mb-1">SCENT NOTES:</strong>
-                            • Butcher's Counter • Crispy Crackling • Grease Apron • Pork Puree[cite: 5]
+
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-horror text-3xl text-amber-500">LARD</h3>[cite: 5]
+                        <p class="text-xs text-vividYellow font-bold tracking-wider uppercase">"Pure pork goodness! The original fat vape."[cite: 5]</p>
+
+                        <div class="space-y-2 pt-2 border-t border-gray-800">
+                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest">Scent & Taste Profile:</div>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500"></i> Unfiltered butcher's counter aroma[cite: 5]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500"></i> Crispy pork crackling notes[cite: 5]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500"></i> Heavy grease-stained apron scent[cite: 5]</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500"></i> Thick, oily vapor texture[cite: 5]</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="px-6 pb-6">
-                    <button onclick="orderFlavor('Lard')" class="w-full bg-amber-500/10 hover:bg-amber-500 hover:text-black border border-amber-500 text-amber-500 font-cyber text-xs py-3 rounded-xl font-bold transition uppercase tracking-wider">
-                        ADD LARD TO CART[cite: 5]
+
+                <div class="p-6 pt-0">
+                    <button onclick="quickAddToCart('Lard', '$19.99', '55862dda-a84b-4ea0-8c4b-a8ecfda52904.png')" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-drippy text-base py-3 rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-1 active:translate-y-1 transition flex items-center justify-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> ORDER LARD - $19.99
                     </button>
                 </div>
             </div>
@@ -322,312 +435,327 @@
         </div>
     </section>
 
-    <!-- INTERACTIVE AVERSION SIMULATOR -->
-    <section id="simulator" class="py-20 bg-black/60 border-y border-white/10 px-4 md:px-8">
-        <div class="max-w-4xl mx-auto bg-cardbg border border-slime/30 rounded-3xl p-6 md:p-10 glow-slime">
-            <div class="text-center mb-8">
-                <span class="bg-slime/10 border border-slime/30 text-slime text-xs font-cyber px-3 py-1 rounded-full uppercase">INTERACTIVE DEMO</span>
-                <h2 class="font-cyber text-2xl md:text-4xl font-extrabold mt-3">VIRTUAL AVERSION TESTING SIMULATOR</h2>
-                <p class="text-gray-400 text-sm mt-2">Simulate taking a drag of VAPEVEX to see how your brain reacts to 0.0% nicotine aversion.</p>
-            </div>
+    <!-- Interactive Flavor Wheel / Tester Section -->
+    <section id="tester" class="py-16 bg-gradient-to-b from-darkBg via-cardBg to-darkBg border-t-2 border-electricPink/40">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="bg-vividYellow text-black font-drippy text-xs px-4 py-1 rounded-full border border-black uppercase tracking-widest">Interactive Regret Tester</span>
+            <h2 class="text-4xl font-black text-white mt-3">SPIN THE <span class="text-electricPink font-horror neon-text-pink">WHEEL OF REGRET</span></h2>
+            <p class="text-gray-400 text-sm mt-1 max-w-xl mx-auto">Not sure which awful flavour will finally break your vaping habit? Click below to simulate your sensory experience!</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="space-y-4">
-                    <label class="block font-cyber text-xs text-gray-300">SELECT YOUR FLAVOUR:</label>
-                    <select id="simFlavor" class="w-full bg-black/60 border border-slime/30 rounded-xl px-4 py-3 text-white font-sans focus:outline-none focus:border-slime">
-                        <option value="Bin Juice">Bin Juice (Warm Trash & Mystery Liquid)</option>[cite: 3]
-                        <option value="Nursing Home">Nursing Home (Boiled Cabbage & Wet Carpet)</option>[cite: 1]
-                        <option value="Horse Ball Hair">Horse Ball Hair (Stable Dust & Sweat)</option>[cite: 2]
-                        <option value="Milk Chunks">Milk Chunks (Expired Cafeteria Dairy)</option>[cite: 4]
-                        <option value="Lard">Lard (Congealed Pork Grease)</option>[cite: 5]
-                    </select>
+            <div class="mt-8 bg-black/80 border-4 border-neonGreen p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+                <div class="max-w-md mx-auto space-y-6">
+                    <div id="wheel-display" class="p-6 bg-cardBg border-2 border-dashed border-neonGreen/60 rounded-2xl min-h-[160px] flex flex-col items-center justify-center text-center transition-all">
+                        <i data-lucide="sparkles" class="w-10 h-10 text-neonGreen animate-spin mb-2"></i>
+                        <h4 id="wheel-title" class="font-drippy text-2xl text-neonGreen">READY TO BE DISGUSTED?</h4>
+                        <p id="wheel-desc" class="text-xs text-gray-400 mt-2">Click the button below to randomly generate a sensory vape hit evaluation!</p>
+                    </div>
 
-                    <button onclick="triggerSimulateHit()" class="w-full bg-slime text-black font-cyber font-black py-4 rounded-xl hover:bg-hazardyellow transition glow-slime text-sm tracking-wider uppercase">
-                        TAKE VIRTUAL PUFF 💨
+                    <button onclick="spinRegretWheel()" class="w-full bg-vividYellow hover:bg-yellow-400 text-black font-drippy text-xl py-4 rounded-2xl border-4 border-black shadow-[6px_6px_0px_#000] active:translate-x-1 active:translate-y-1 transition">
+                        🎰 TEST YOUR SENSORY TOLERANCE
                     </button>
-                </div>
-
-                <div id="simScreen" class="bg-black/80 border border-white/10 rounded-2xl p-6 min-h-[200px] flex flex-col justify-center items-center text-center">
-                    <i class="fa-solid fa-brain text-4xl text-gray-600 mb-3 animate-pulse"></i>
-                    <p class="text-gray-400 font-cyber text-xs">CLICK "TAKE VIRTUAL PUFF" TO BEGIN BRAIN REWIRING SIMULATION.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- LIVE GLOBAL REVIEWS SECTION (SUPABASE POWERED) -->
-    <section id="reviews" class="py-20 px-4 md:px-8 max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
-                <span class="text-slime font-cyber text-xs tracking-widest uppercase">REAL WORLD RECOVERY</span>
-                <h2 class="font-cyber text-3xl md:text-5xl font-extrabold mt-1">COMMUNITY REVIEWS</h2>
-                <p class="text-gray-400 text-sm mt-2">Live sync enabled across vapevex.site via Supabase Cloud.</p>
-            </div>
-            <button onclick="toggleReviewForm()" class="mt-4 md:mt-0 bg-slime text-black font-cyber font-bold text-xs px-6 py-3 rounded-xl hover:bg-hazardyellow transition glow-slime uppercase">
-                <i class="fa-solid fa-pen mr-2"></i> WRITE A REVIEW
-            </button>
+    <!-- Humorous Testimonials Section -->
+    <section id="reviews" class="py-20 max-w-7xl mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="bg-neonGreen text-black font-drippy text-xs px-4 py-1.5 rounded-full border border-black uppercase tracking-widest">REAL FORMER VAPERS</span>
+            <h2 class="text-4xl font-black text-white mt-3">VICTIMS OF <span class="text-brightCyan font-horror">PERFECT SUCCESS</span></h2>
+            <p class="text-gray-400 text-sm">Read how VAPEVEX™ turned people off vaping forever in 3 hits or less.</p>
         </div>
 
-        <!-- NEW REVIEW FORM MODAL / COLLAPSIBLE -->
-        <div id="reviewFormContainer" class="hidden bg-cardbg border border-slime/40 rounded-2xl p-6 mb-12 glow-slime">
-            <h3 class="font-cyber text-xl font-bold mb-4 text-slime">LEAVE YOUR VAPEVEX REVIEW</h3>
-            <form id="reviewForm" onsubmit="handleReviewSubmit(event)" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="bg-cardBg p-6 rounded-2xl border-2 border-neonGreen/40 relative shadow-lg">
+                <div class="flex items-center gap-1 text-vividYellow mb-3">
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                </div>
+                <p class="text-gray-300 text-sm italic leading-relaxed">
+                    "I took one hit of Bin Juice and threw my $80 vape mod straight into the ocean. I couldn't look at a vape device without gagging for two weeks. Haven't vaped since!"
+                </p>
+                <div class="mt-4 pt-4 border-t border-gray-800 flex items-center justify-between">
                     <div>
-                        <label class="block font-cyber text-xs text-gray-300 mb-1">YOUR NAME / ALIAS:</label>
-                        <input type="text" id="revAuthor" required placeholder="e.g. Ex-Vaper Dave" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-slime text-sm">
+                        <div class="font-black text-white text-sm">Dave M. (24)</div>
+                        <div class="text-xs text-neonGreen font-mono">Vape-Free: 8 Months</div>
                     </div>
+                    <span class="bg-brightCyan/20 text-brightCyan text-[10px] font-bold px-2 py-1 rounded">BIN JUICE</span>
+                </div>
+            </div>
+
+            <div class="bg-cardBg p-6 rounded-2xl border-2 border-electricPink/40 relative shadow-lg">
+                <div class="flex items-center gap-1 text-vividYellow mb-3">
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                </div>
+                <p class="text-gray-300 text-sm italic leading-relaxed">
+                    "Nursing Home flavour instantly reminded me of my landlord's sofa and boiled carrots. My brain physically re-wired itself on Puff #2. I am cured!"
+                </p>
+                <div class="mt-4 pt-4 border-t border-gray-800 flex items-center justify-between">
                     <div>
-                        <label class="block font-cyber text-xs text-gray-300 mb-1">FLAVOUR SUFFERED:</label>
-                        <select id="revFlavor" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-slime text-sm">
-                            <option value="Bin Juice">Bin Juice</option>[cite: 3]
-                            <option value="Nursing Home">Nursing Home</option>[cite: 1]
-                            <option value="Horse Ball Hair">Horse Ball Hair</option>[cite: 2]
-                            <option value="Milk Chunks">Milk Chunks</option>[cite: 4]
-                            <option value="Lard">Lard</option>[cite: 5]
-                        </select>
+                        <div class="font-black text-white text-sm">Sarah K. (21)</div>
+                        <div class="text-xs text-electricPink font-mono">Vape-Free: 5 Months</div>
                     </div>
+                    <span class="bg-electricPink/20 text-electricPink text-[10px] font-bold px-2 py-1 rounded">NURSING HOME</span>
                 </div>
+            </div>
 
-                <div>
-                    <label class="block font-cyber text-xs text-gray-300 mb-1">REPULSION RATING (1-5 STARS):</label>
-                    <select id="revRating" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-slime text-sm">
-                        <option value="5">⭐⭐⭐⭐⭐ (5/5 - Utterly Vile, Stopped My Craving Immediately)</option>
-                        <option value="4">⭐⭐⭐⭐ (4/5 - Truly Horrible)</option>
-                        <option value="3">⭐⭐⭐ (3/3 - Disgusting enough)</option>
-                        <option value="2">⭐⭐ (2/5 - Bad, but survived)</option>
-                        <option value="1">⭐ (1/5 - Needs more filth)</option>
-                    </select>
+            <div class="bg-cardBg p-6 rounded-2xl border-2 border-vividYellow/40 relative shadow-lg">
+                <div class="flex items-center gap-1 text-vividYellow mb-3">
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
+                    <i data-lucide="star" class="w-5 h-5 fill-vividYellow"></i>
                 </div>
+                <p class="text-gray-300 text-sm italic leading-relaxed">
+                    "Milk Chunks gave me instant regret. I tasted sour cafeteria dairy and my hand-to-mouth vaping urge vanished permanently. Incredible invention."
+                </p>
+                <div class="mt-4 pt-4 border-t border-gray-800 flex items-center justify-between">
+                    <div>
+                        <div class="font-black text-white text-sm">Marcus L. (28)</div>
+                        <div class="text-xs text-vividYellow font-mono">Vape-Free: 1 Year</div>
+                    </div>
+                    <span class="bg-blue-400/20 text-blue-400 text-[10px] font-bold px-2 py-1 rounded">MILK CHUNKS</span>
+                </div>
+            </div>
 
-                <div>
-                    <label class="block font-cyber text-xs text-gray-300 mb-1">YOUR REVIEW / EXPERIENCES:</label>
-                    <textarea id="revComment" required rows="3" placeholder="Tell the community how disgusting it was..." class="w-full bg-black/60 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-slime text-sm"></textarea>
-                </div>
-
-                <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="toggleReviewForm()" class="px-5 py-2.5 text-xs font-cyber text-gray-400 hover:text-white uppercase">CANCEL</button>
-                    <button type="submit" id="submitRevBtn" class="bg-slime text-black font-cyber font-bold text-xs px-6 py-2.5 rounded-xl hover:bg-hazardyellow transition uppercase">
-                        SUBMIT TO GLOBAL FEED
-                    </button>
-                </div>
-            </form>
         </div>
+    </section>
 
-        <!-- LIVE REVIEWS FEED -->
-        <div id="reviewsFeed" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="col-span-2 text-center py-12 text-gray-500 font-cyber">
-                <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-slime"></i>
-                <p>LOADING GLOBAL COMMUNITY REVIEWS FROM SUPABASE...</p>
+    <!-- Quit Kit Bundle Offer Section -->
+    <section class="py-16 max-w-5xl mx-auto px-4">
+        <div class="bg-gradient-to-r from-electricPink via-purple-900 to-black p-8 md:p-12 rounded-3xl border-4 border-vividYellow shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="space-y-4 text-center md:text-left z-10">
+                <span class="bg-vividYellow text-black font-drippy text-xs px-3 py-1 rounded uppercase tracking-wider font-extrabold">ULTIMATE AVERSION BUNDLE</span>
+                <h3 class="text-3xl md:text-5xl font-black text-white leading-tight">THE REPULSION TANK <br><span class="text-vividYellow font-horror">5-PACK QUIT KIT</span></h3>
+                <p class="text-gray-200 text-sm max-w-md">Includes Nursing Home, Horse Ball Hair, Bin Juice, Milk Chunks, and Lard. Rotate flavours to ensure maximum mental repulsion!</p>
+                <div class="flex items-center gap-4 justify-center md:justify-start">
+                    <span class="text-4xl font-black text-neonGreen font-drippy">$69.99</span>
+                    <span class="text-lg text-gray-400 line-through font-bold">$99.95</span>
+                    <span class="bg-neonGreen text-black font-extrabold text-xs px-2.5 py-1 rounded">SAVE 30%</span>
+                </div>
+            </div>
+
+            <div class="z-10 w-full md:w-auto">
+                <button onclick="quickAddToCart('The Repulsion Tank 5-Pack', '$69.99', '35e853c7-07cf-4e03-a0c9-41a664be10d6.png')" class="w-full md:w-auto bg-neonGreen hover:bg-lime-400 text-black font-drippy text-xl px-8 py-5 rounded-2xl border-4 border-black shadow-[6px_6px_0px_#000] active:translate-x-1 active:translate-y-1 transition text-center flex items-center justify-center gap-2">
+                    <i data-lucide="zap" class="w-6 h-6"></i> CLAIM THE 5-PACK KIT
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-white/10 py-12 px-4 text-center bg-black/80 font-sans text-xs text-gray-500">
-        <div class="max-w-6xl mx-auto flex flex-col items-center space-y-4">
-            <span class="font-horror text-3xl text-slime">VAPEVEX</span>
-            <p class="max-w-md">
-                VAPEVEX™ is an aversion harm-reduction concept designed to break psychological hand-to-mouth habits using 0.0% nicotine and unpleasant sensory triggers.
-            </p>
-            <p>© 2026 VAPEVEX INC. ALL RIGHTS RESERVED. VAPEVEX.SITE</p>
+    <!-- Disclaimer & Footer -->
+    <footer class="bg-black border-t-2 border-neonGreen/30 pt-12 pb-8 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 space-y-8">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="heart-handshake" class="w-8 h-8 text-neonGreen"></i>
+                    <div>
+                        <h4 class="font-bold text-white">Need Real Quitting Support?</h4>
+                        <p class="text-xs text-gray-400">VAPEVEX™ is dedicated to helping people break nicotine dependence. Talk to a health professional for free advice.</p>
+                    </div>
+                </div>
+                <a href="tel:18007848669" class="bg-gray-800 hover:bg-gray-700 text-neonGreen font-mono font-bold px-4 py-2 rounded-xl border border-neonGreen/40 text-xs">
+                    Quitline: 1-800-QUIT-NOW
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pt-4">
+                <div class="space-y-2">
+                    <div class="font-horror text-2xl text-neonGreen">VAPEVEX™</div>
+                    <p class="text-xs text-gray-500">Aversion Therapy Vapes. 0.1% Nicotine. Intentionally awful flavours designed to break the cycle.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold text-white mb-2 text-xs uppercase tracking-wider">Flavours</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="#flavors" class="hover:text-neonGreen">Nursing Home</a></li>
+                        <li><a href="#flavors" class="hover:text-neonGreen">Horse Ball Hair</a></li>
+                        <li><a href="#flavors" class="hover:text-neonGreen">Bin Juice</a></li>
+                        <li><a href="#flavors" class="hover:text-neonGreen">Milk Chunks</a></li>
+                        <li><a href="#flavors" class="hover:text-neonGreen">Lard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold text-white mb-2 text-xs uppercase tracking-wider">Company</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="#science" class="hover:text-neonGreen">Aversion Science</a></li>
+                        <li><a href="#reviews" class="hover:text-neonGreen">Success Stories</a></li>
+                        <li><a href="#" class="hover:text-neonGreen">Lab Reports</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold text-white mb-2 text-xs uppercase tracking-wider">Disclaimer</h5>
+                    <p class="text-[11px] text-gray-500 leading-tight">
+                        VAPEVEX™ products contain 0.1% nicotine. Nicotine is an addictive chemical. Intended strictly for adult smokers/vapers seeking to reduce or quit nicotine intake through flavor aversion.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center text-xs text-gray-600 border-t border-gray-900 pt-6">
+                © 2026 VAPEVEX™ Inc. All Rights Reserved. Ruining Vaping One Terrible Hit At A Time.
+            </div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT & SUPABASE CLOUD INTEGRATION ENGINE -->
+    <!-- Interactive Cart / Checkout Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border-4 border-neonGreen w-full max-w-md rounded-3xl p-6 shadow-2xl relative space-y-4">
+            <button onclick="closeCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-6 h-6 text-neonGreen"></i>
+                <h3 class="font-drippy text-2xl text-white">YOUR QUIT KIT</h3>
+            </div>
+
+            <div id="cart-items" class="space-y-3 max-h-60 overflow-y-auto py-2">
+                <p class="text-center text-gray-500 text-sm py-8">Your cart is empty! Pick a terrible flavour to get started.</p>
+            </div>
+
+            <div class="border-t border-gray-800 pt-4 space-y-3">
+                <div class="flex justify-between font-bold text-white">
+                    <span>Total:</span>
+                    <span id="cart-total" class="text-neonGreen font-mono">$0.00</span>
+                </div>
+
+                <button onclick="triggerCheckoutWarning()" class="w-full bg-electricPink hover:bg-pink-600 text-white font-drippy text-lg py-3 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000] transition">
+                    PROCEED TO SUFFER (CHECKOUT)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // HARDCODED SUPABASE CREDENTIALS FOR VAPEVEX.SITE
-        const SUPABASE_URL = "https://jstnfpqyrbbbzqjlnrbe.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzdG5mcHF5cmJiYnpxamxucmJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MzMyNzEsImV4cCI6MjEwNzQwOTI3MX0.-cyQQfXpD_oYa232A_i57QrN_x8hHA2yJ6627_K7m2s";
+        lucide.createIcons();
 
-        // Initialize Supabase Client
-        let supabaseClient = null;
-        if (window.supabase) {
-            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let cart = [];
+
+        function openCartModal() {
+            document.getElementById('cart-modal').classList.remove('hidden');
         }
 
-        // Generate persistent local token for author ownership
-        function getUserToken() {
-            let token = localStorage.getItem('vapevex_user_token');
-            if (!token) {
-                token = 'user_' + Math.random().toString(36).substring(2, 11) + Date.now();
-                localStorage.setItem('vapevex_user_token', token);
-            }
-            return token;
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
         }
 
-        const myUserToken = getUserToken();
-
-        // Scroll helper
-        function scrollToFlavours() {
-            document.getElementById('flavours').scrollIntoView({ behavior: 'smooth' });
+        function quickAddToCart(name, price, img) {
+            cart.push({ name, price, img });
+            updateCartUI();
+            openCartModal();
         }
 
-        // Order Modal Simulator
-        function orderFlavor(flavorName) {
-            alert(`🛒 [VAPEVEX CHECKOUT]\n\nSelected Flavour: ${flavorName}\nNicotine Content: 0.0% Pure Aversion\nPuffs: 1,500 Puffs\n\nThank you for taking the step to quit vaping! Order processing for vapevex.site simulated.`);
-        }
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const countEl = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
 
-        // Virtual Puff Simulator Logic
-        function triggerSimulateHit() {
-            const flavor = document.getElementById('simFlavor').value;
-            const screen = document.getElementById('simScreen');
+            countEl.innerText = cart.length;
 
-            screen.innerHTML = `
-                <i class="fa-solid fa-wind text-4xl text-slime mb-2 animate-bounce"></i>
-                <p class="font-cyber text-slime font-bold text-sm">INHALING 0.0% NICOTINE ${flavor.toUpperCase()}...</p>
-            `;
-
-            setTimeout(() => {
-                let reactionText = "";
-                if (flavor === "Bin Juice") reactionText = "🤮 RECOIL! Tastes like dumpster runoff & soggy cardboard! Brain craving score dropped by 98%!"[cite: 3];
-                if (flavor === "Nursing Home") reactionText = "🤢 RETCH! Tastes like boiled cabbage and wet hospital towels! Urge to vape neutralized!"[cite: 1];
-                if (flavor === "Horse Ball Hair") reactionText = "🐴 DISGUST! Barnyard sweat & dusty mane notes detected. Instant craving shutdown!"[cite: 2];
-                if (flavor === "Milk Chunks") reactionText = "🥛 REPULSION! Clumpy expired cafeteria dairy detected. Brain regrets taking a puff!"[cite: 4];
-                if (flavor === "Lard") reactionText = "🐖 GREASE OVERLOAD! Pure congealed pork fat taste. Craving deleted forever!"[cite: 5];
-
-                screen.innerHTML = `
-                    <div class="animate-pulse">
-                        <i class="fa-solid fa-face-dizzy text-5xl text-hazardyellow mb-3"></i>
-                        <p class="font-cyber text-white font-extrabold text-sm mb-2">${reactionText}</p>
-                        <span class="text-xs bg-slime/20 text-slime px-3 py-1 rounded-full font-cyber">STATUS: CRAVING ERADICATED</span>
-                    </div>
-                `;
-            }, 1200);
-        }
-
-        // Toggle Review Form Visibility
-        function toggleReviewForm() {
-            const container = document.getElementById('reviewFormContainer');
-            container.classList.toggle('hidden');
-        }
-
-        // Load Live Reviews from Supabase
-        async function fetchReviews() {
-            const feed = document.getElementById('reviewsFeed');
-
-            if (!supabaseClient) {
-                feed.innerHTML = `<p class="col-span-2 text-center text-red-400 font-cyber">Supabase client failed to load.</p>`;
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 text-sm py-8">Your cart is empty! Pick a terrible flavour to get started.</p>';
+                totalEl.innerText = '$0.00';
                 return;
             }
 
-            try {
-                const { data: reviews, error } = await supabaseClient
-                    .from('vapevex_reviews')
-                    .select('*')
-                    .order('created_at', { ascending: false });
+            let html = '';
+            let total = 0;
 
-                if (error) throw error;
-
-                if (!reviews || reviews.length === 0) {
-                    feed.innerHTML = `
-                        <div class="col-span-2 bg-cardbg/40 border border-white/5 rounded-2xl p-8 text-center text-gray-400 font-cyber">
-                            <p class="mb-2 text-slime">NO REVIEWS YET!</p>
-                            <p class="text-xs">Be the first brave vaper to review our 0% aversion flavours above.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                feed.innerHTML = reviews.map(rev => {
-                    const stars = '⭐'.repeat(rev.rating);
-                    const isAuthor = rev.user_token === myUserToken;
-
-                    return `
-                        <div class="bg-cardbg border border-white/10 rounded-2xl p-6 relative flex flex-col justify-between hover:border-slime/40 transition">
+            cart.forEach((item, index) => {
+                const numericPrice = parseFloat(item.price.replace('$', ''));
+                total += numericPrice;
+                html += `
+                    <div class="flex items-center justify-between bg-black/40 p-3 rounded-xl border border-gray-800">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.img}" class="w-10 h-10 object-cover rounded-lg border border-neonGreen">
                             <div>
-                                <div class="flex items-center justify-between mb-3">
-                                    <div>
-                                        <h4 class="font-cyber font-bold text-white text-sm">${escapeHtml(rev.author)}</h4>
-                                        <span class="text-xs text-slime font-cyber font-semibold">${escapeHtml(rev.flavor)}</span>
-                                    </div>
-                                    <div class="text-sm">${stars}</div>
-                                </div>
-                                <p class="text-gray-300 text-sm font-sans mb-4">"${escapeHtml(rev.comment)}"</p>
-                            </div>
-                            <div class="flex items-center justify-between border-t border-white/5 pt-3 text-xs text-gray-500 font-cyber">
-                                <span>${new Date(rev.created_at).toLocaleDateString()}</span>
-                                ${isAuthor ? `
-                                    <button onclick="deleteReview('${rev.id}')" class="text-neonpink hover:text-red-400 font-bold transition">
-                                        <i class="fa-solid fa-trash mr-1"></i> DELETE MY REVIEW
-                                    </button>
-                                ` : ''}
+                                <div class="font-bold text-xs text-white">${item.name}</div>
+                                <div class="text-xs text-neonGreen font-mono">${item.price}</div>
                             </div>
                         </div>
-                    `;
-                }).join('');
-
-            } catch (err) {
-                console.error("Supabase Error:", err);
-                feed.innerHTML = `
-                    <div class="col-span-2 bg-red-950/20 border border-red-500/30 rounded-2xl p-6 text-center text-red-400 font-cyber text-xs">
-                        <i class="fa-solid fa-triangle-exclamation text-xl mb-2 block"></i>
-                        <p>COULD NOT FETCH LIVE REVIEWS FROM SUPABASE DATABASE.</p>
-                        <p class="text-gray-400 mt-1">Please ensure you have created the 'vapevex_reviews' table in your Supabase SQL Editor.</p>
+                        <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 text-xs font-bold">Remove</button>
                     </div>
                 `;
+            });
+
+            container.innerHTML = html;
+            totalEl.innerText = '$' + total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function triggerCheckoutWarning() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            const confirmQuit = confirm("ARE YOU SURE YOU ARE READY TO SUFFER?\n\nBy clicking OK, you acknowledge that VAPEVEX™ tastes intentionally terrible to break your vaping addiction.");
+            if (confirmQuit) {
+                alert("Order Placed! Get ready to quit vaping forever.");
+                cart = [];
+                updateCartUI();
+                closeCartModal();
             }
         }
 
-        // Submit Review to Supabase
-        async function handleReviewSubmit(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitRevBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerText = "PUBLISHING...";
-
-            const newReview = {
-                author: document.getElementById('revAuthor').value.trim(),
-                flavor: document.getElementById('revFlavor').value,
-                rating: parseInt(document.getElementById('revRating').value),
-                comment: document.getElementById('revComment').value.trim(),
-                user_token: myUserToken
-            };
-
-            try {
-                const { error } = await supabaseClient
-                    .from('vapevex_reviews')
-                    .insert([newReview]);
-
-                if (error) throw error;
-
-                document.getElementById('reviewForm').reset();
-                toggleReviewForm();
-                fetchReviews();
-
-            } catch (err) {
-                alert("Failed to submit review: " + err.message);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "SUBMIT TO GLOBAL FEED";
+        const regretOptions = [
+            {
+                title: "BIN JUICE - DUMPSTER HIT",
+                desc: "Notes of wet cardboard, stale food slurry, and alley liquid. Gag rating: 9.8/10."
+            },
+            {
+                title: "NURSING HOME - BOILED VEGGIE HIT",
+                desc: "Notes of old lady perfume, hospital detergent, and overcooked carrots. Gag rating: 9.5/10."
+            },
+            {
+                title: "HORSE BALL HAIR - BARNYARD HIT",
+                desc: "Notes of stable dust, sweaty hair, and old tennis ball. Gag rating: 9.9/10."
+            },
+            {
+                title: "MILK CHUNKS - EXPIRED DAIRY HIT",
+                desc: "Notes of cafeteria curds and sour warm milk. Gag rating: 9.7/10."
+            },
+            {
+                title: "LARD - PORK FAT HIT",
+                desc: "Notes of raw butcher counter grease and crispy crackling. Gag rating: 9.6/10."
             }
+        ];
+
+        function spinRegretWheel() {
+            const display = document.getElementById('wheel-display');
+            const title = document.getElementById('wheel-title');
+            const desc = document.getElementById('wheel-desc');
+
+            title.innerText = "SIMULATING REGRET...";
+            desc.innerText = "Inhaling virtual grossness...";
+
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * regretOptions.length);
+                const selected = regretOptions[randomIndex];
+
+                title.innerText = selected.title;
+                desc.innerText = selected.desc;
+                display.classList.add('border-electricPink');
+            }, 800);
         }
 
-        // Delete Review (Only author token match)
-        async function deleteReview(id) {
-            if (!confirm("Are you sure you want to delete your review?")) return;
-
-            try {
-                const { error } = await supabaseClient
-                    .from('vapevex_reviews')
-                    .delete()
-                    .eq('id', id)
-                    .eq('user_token', myUserToken);
-
-                if (error) throw error;
-                fetchReviews();
-            } catch (err) {
-                alert("Could not delete review: " + err.message);
-            }
-        }
-
-        // Helper to prevent XSS in review comments
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        // Initial Load
-        window.addEventListener('DOMContentLoaded', fetchReviews);
+        let puffs = 1482920;
+        setInterval(() => {
+            puffs += Math.floor(Math.random() * 3) + 1;
+            document.getElementById('puffs-counter').innerText = puffs.toLocaleString();
+        }, 3000);
     </script>
 </body>
 </html>
